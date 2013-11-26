@@ -1,0 +1,60 @@
+{
+  "data":
+          [
+            {
+              "timeframe": {"start": 0, "end": 0},
+              "code": "<h1>\nThis is the default case.\n</h1>",
+              "preview": "<h1>\nThis is the default case.\n</h1>"
+            },
+            {
+              "timeframe": {"start": 0, "end": 2},
+              "code": "<h1>\nWelcome To SMU Hack-A-Week\n</h1>\n<button onclick=\"play();\">Click here to play.</button>",
+              "preview": "<h1>\nWelcome To SMU Hack-A-Week\n</h1>\n<button onclick=\"tutor.videoPlayer.play();\">Click here to play.</button>"
+            },
+            {
+              "timeframe": {"start": 2, "end": 5},
+              "code": "<h1>\nThis video is unrelated however you can see the <i>proof-of-concept</i>.\n</h1>",
+              "preview": "<h1>\nThis video is unrelated however you can see the <i>proof-of-concept</i>.\n</h1>"
+            },
+            {
+              "timeframe": {"start": 5, "end": 14},
+              "code": "<h1>\n Pause the video above and try typing and editing the code box.\n</h1>",
+              "preview": "<button onclick=\"tutor.videoPlayer.pause();\">Click here to pause.</button>\n<span>Notice that the preview <i>can</i> in fact be different than the code, if that is desirable.</span>"
+            },
+            {
+              "timeframe": {"start": 14, "end": 15},
+              "code": "<h1>\n Pause the video above and try typing and editing the code box.\n</h1>",
+              "preview": "<script>\n tutor.videoPlayer.pause(); \n</script> <b>I paused the video for you.</b> <i>You may click the play button to continue.</i>"
+            },
+            {
+              "timeframe": {"start": 15, "end": 20},
+              "code": "<h2>\nStep 1\n</h2>\n<script>\n console.log(\"Hello World\");\n</script>",
+              "preview": "<h2>\nStep 1\n</h2>\n<script>\n console.log(\"Hello World\");\n</script>"
+            },
+            {
+              "timeframe": {"start": 20, "end": 25},
+              "code": "<h2>\nStep 2\n</h2>",
+              "preview": "<h2>\nStep 2\n</h2>"
+            },
+            {
+              "timeframe": {"start": 25, "end": 30},
+              "code": "<h2>\nStep 3\n</h2>",
+              "preview": "<h2>\nStep 3\n</h2>"
+            },
+            {
+              "timeframe": {"start": 30, "end": 35},
+              "code": "<h2>\nStep 4\n</h2>",
+              "preview": "<h2>\nStep 4\n</h2>"
+            },
+            {
+              "timeframe": {"start": 35, "end": 40},
+              "code": "<h2>\nStep 5\n</h2>",
+              "preview": "<h2>\nStep 5\n</h2>"
+            },
+            {
+              "timeframe": {"start": 40, "end": 46},
+              "code": "<h2>\nThanks for watching!\n</h2>",
+              "preview": "<h2>\nThanks for watching!\n</h2>\n <button onclick=\"tutor.videoPlayer.loop(true); tutor.videoPlayer.play();\">Click here to play again.</button>"
+            }
+          ]
+}

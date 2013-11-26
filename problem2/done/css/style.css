@@ -1,0 +1,15 @@
+/* 
+    Document   : style
+    Created on : Apr 20, 2013, 8:04:11 PM
+    Author     : glavin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+  display: block;
+}
+
+body { 
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}

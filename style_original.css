@@ -1,0 +1,50 @@
+html {
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-y: scroll;
+}
+
+body {
+    height: 100%;
+    font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #9da5bc;
+/*background: #48c3f2;*/
+}
+
+input,button,select,option {
+    font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+}
+
+#container {
+    width: 600px;
+    padding: 0;
+}
+
+h1 {
+    color: #00516f;
+    font-size: 30px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.64);
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+.landing {
+    display: block;
+    color: #002c3c;
+    font-size: 18px;
+    line-height: 24px;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.33);
+    text-align: center;
+}
+
+.landing a {
+    color: #002c3c;
+}

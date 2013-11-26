@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 2 - Hack-A-Week</title>
+
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    
+    <!-- Twitter Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <style>
+      body { 
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    
+    <script>
+      // JSON Object storing the 
+      var planData = 
+        [ 
+          { 
+            "name": "Voice & Data 45 - Promo",
+            "monthlyCost": 55.00, // $ per month
+            "anytimeLocalMinutes" : 1000,
+            "additionalMinutes": 0.50, // $ per minute
+            "data": 150, // in MB
+            "additionalData": 10.00, // $ per additional 250MB
+            "bonus": [ ]
+          },
+          { 
+            "name": "Voice & Data 55",
+            "monthlyCost": 55.00, // $ per month
+            "anytimeLocalMinutes" : 1000,
+            "additionalMinutes": 0.50, // $ per minute
+            "data": 150, // in MB
+            "additionalData": 10.00, // $ per additional 250MB
+            "bonus": [ ]
+          },
+          { 
+            "name": "Voice & Data 70",
+            "monthlyCost": 70.00, // $ per month
+            "anytimeLocalMinutes" : Number.POSITIVE_INFINITY,
+            "additionalMinutes": 0.50, // $ per minute
+            "data": 1000, // in MB
+            "additionalData": 10.00, // $ per additional 1GB
+            "bonus": [ ]
+          },
+          { 
+            "name": "Voice & Data 80",
+            "monthlyCost": 80.00, // $ per month
+            "anytimeLocalMinutes" : Number.POSITIVE_INFINITY,
+            "additionalMinutes": 0.50, // $ per minute
+            "data": 3000, // in MB
+            "additionalData": 10.00, // $ per additional 1GB
+            "bonus": [ ]
+          },
+          { 
+            "name": "Voice & Data 100",
+            "monthlyCost": 100.00, // $ per month
+            "anytimeNationwideMinutes" : Number.POSITIVE_INFINITY,
+            "additionalMinutes": 0.00, // $ per minute
+            "data": 5000, // in MB
+            "additionalData": 10.00, // $ per additional 1GB
+            "bonus": [ ]
+          }
+        ];
+    </script>
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body data-spy="scroll" data-target="#navbar">
+    
+    <div class="container">
+
+      <div id="navbar" class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+ 
+            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+ 
+            <!-- Be sure to leave the brand out there if you want it shown -->
+            <a class="brand" href="#">Phone Plans</a>
+ 
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+              <!-- .nav, .navbar-search, .navbar-form, etc -->
+            
+              <ul class="nav">
+                <li class="active">
+                  <a href="#home">Home</a>
+                </li>
+                <li><a href="#assist">Assistant</a></li>
+                <li><a href="#plans">Plans</a></li>
+              
+              </ul>
+            
+            </div>
+ 
+          </div>
+        </div>
+      </div>
+    
+      <div id="content">
+    
+        <section id="home">
+          <h1>Home</h1>
+          <p class="lead">
+            Welcome. This is a new way of deciding on your phone plan that is best for you. 
+            Please continue to the <a href="#assist">assistant</a> below or to the <a href="#plans">plans section</a>. 
+          </p>
+        </section>
+
+        <section id="assist">
+          <h1>Assistant <small class="text-error">Beta</small></h1>
+          <p class="lead">
+            This is the new automated phone-plan assistant.
+          </p>
+          <div class="lead alert alert-info">
+              Coming soon!
+          </div>
+          
+          <div class="well">
+          
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>Best Match Calculator</legend>
+                <p class="lead">
+                  Please enter your expected usage for your phone and I will calculate which plan may be best for you!
+                </p>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Number of Local Minutes</label>
+                  <div class="controls">
+                    <input type="number" name="quantity" min="0" id="texts" placeholder="5000" value="0">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Number of Nationwide Minutes</label>
+                  <div class="controls">
+                    <input type="number" name="quantity" min="1" id="texts" placeholder="5000" value="0">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Number of Texts</label>
+                  <div class="controls">
+                    <input type="number" name="quantity" min="1" id="texts" placeholder="5000" value="0">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Amount of Data Used</label>
+                  <div class="controls">
+                    <input type="number" name="quantity" min="1" max="5" id="texts" placeholder="5000" value="0">
+                  </div>
+                </div>
+                
+              </fieldset>
+            </form>
+            
+            <hr/>
+            
+            <div class="hero-unit">
+              <h2>Results</h2>
+              
+              <div class="alert alert-success">
+                <h3>
+                  <span class="badge badge-success ">1.</span> 
+                  Voice & Data 45 - Promo 
+                  <small class="text-info">$45.00/month</small>
+                  <span class="badge badge-info pull-right">$45.00/month</span>              
+                </h3>
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 45%;"></div>               
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <h3>
+                  <span class="badge badge-info">2.</span> Voice & Data 55 
+                  <small class="text-warning">$55.00/month</small>
+                  <span class="badge badge-warning pull-right">$55.00/month</span>              
+                </h3>
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 55%;"></div>               
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <h3>
+                  <span class="badge badge-info">3.</span> Voice & Data 70 
+                  <small class="text-warning">$70.00/month</small>
+                  <span class="badge badge-warning pull-right">$70.00/month</span>              
+                </h3>
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 70%;"></div>               
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <h3>
+                  <span class="badge badge-info">4.</span> Voice & Data 80 
+                  <small class="text-warning">$80.00/month</small>
+                  <span class="badge badge-warning pull-right">$80.00/month</span>              
+                </h3>
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 80%;"></div>               
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <h3>
+                  <span class="badge badge-info">5.</span> Voice & Data 100 
+                  <small class="text-warning">$100.00/month</small>
+                  <span class="badge badge-warning pull-right">$100.00/month</span>              
+                </h3>
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 100%;"></div>               
+                </div>
+              </div>
+              
+            </div>
+          
+            
+          </div>
+
+        </section>
+
+        <section id="plans">
+          <h1>Plans        
+            <div class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Jump To Plan
+                <span class="caret"></span>
+              </a>
+              <!-- dropdown menu links -->
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <li><a tabindex="-1" href="#vd45">Voice & Data 45 - Promo</a></li>
+                <li><a tabindex="-1" href="#vd55">Voice & Data 55</a></li>
+                <li><a tabindex="-1" href="#vd70">Voice & Data 70</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#vd80">Voice & Data 80</a></li>
+                <li><a tabindex="-1" href="#vd100">Voice & Data 100</a></li>
+              </ul>
+            </div>
+          </h1>
+          
+          <section id="displayPlans">
+          
+            <div id="vd45" class="well well-large">
+             <div class="page-header">
+                <h1>Voice & Data 45 - Promo <small class="pull-right">$45.00/month</small></h1>
+              </div>
+              <div class="lead">
+                <h2>1000 <small class="lead text-info">anytime local minutes</small></h2>
+                <h2>150 <small class="lead text-info">MB of data</small></h2>
+                <p class="alert alert-success">$10 per additional 250MB</p>
+                <p class="alert alert-block">
+                  Convert your local minutes to nationwide minutes for an additional $10. Learn more.
+                </p>
+              </div>          
+            </div>
+            
+            <div id="vd55" class="well well-large">
+             <div class="page-header">
+                <h1>Voice & Data 55 <small class="pull-right">$55.00/month</small></h1>
+              </div>
+              <div class="lead">
+                <h2>1000 <small class="lead text-info">anytime local minutes</small></h2>
+                <h2>150 <small class="lead text-info">MB of data</small></h2>
+                <p class="alert alert-success">$10 per additional 250MB</p>
+                <p class="alert alert-block">
+                  Convert your local minutes to nationwide minutes for an additional $10. Learn more.
+                </p>
+              </div>          
+            </div>
+            
+            <div id="vd70" class="well well-large">
+             <div class="page-header">
+                <h1>Voice & Data 70 <small class="pull-right">$70.00/month</small></h1>
+              </div>
+              <div class="lead">
+                <h2>Unlimited <small class="lead text-info">anytime local minutes</small></h2>
+                <h2>1,000 <small class="lead text-info">MB of data</small></h2>
+                <p class="alert alert-success">$10 per additional 1,000 MB</p>
+                <p class="alert alert-block">
+                  Convert your local minutes to nationwide minutes for an additional $10. Learn more.
+                </p>
+              </div>          
+            </div>
+            
+            <div id="vd80" class="well well-large">
+             <div class="page-header">
+                <h1>Voice & Data 80 <small class="pull-right">$80.00/month</small></h1>
+              </div>
+              <div class="lead">
+                <h2>Unlimited <small class="lead text-info">anytime local minutes</small></h2>
+                <h2>3,000 <small class="lead text-info">MB of data</small></h2>
+                <p class="alert alert-success">$10 per additional 1,000 MB</p>
+                <p class="alert alert-block">
+                  Convert your local minutes to nationwide minutes for an additional $10. Learn more.
+                </p>
+              </div>          
+            </div>
+            
+            <div id="vd100" class="well well-large">
+             <div class="page-header">
+                <h1>Voice & Data 100 <small class="pull-right">$100.00/month</small></h1>
+              </div>
+              <div class="lead">
+                <h2>Unlimited <small class="lead text-info">anytime minutes across Canada</small></h2>
+                <h2>5,000 <small class="lead text-info">MB of data</small></h2>
+                <p class="alert alert-success">$10 per additional 1,000 MB</p>
+                
+              </div>          
+            </div>
+            
+            
+          </section>
+      
+        </section>
+        
+      </div>
+      
+    </div>
+    
+    
+  </body>
+</html>

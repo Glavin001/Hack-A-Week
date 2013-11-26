@@ -1,0 +1,118 @@
+<!-- Hack-A-Week - Problem 4 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Problem 4 - Hack-A-Week</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <!-- CodeMirror -->
+    <script src="../js/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../js/codemirror/lib/codemirror.css">
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/clike/clike.js"></script>
+    <script src="../js/codemirror/mode/php/php.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <!-- VideoJs -->
+    <link href="../js/video-js/video-js.css" rel="stylesheet">
+    <script src="../js/video-js/video.js"></script>
+    <script>
+      _V_.options.flash.swf = "../js/video-js/video-js.swf";
+    </script>
+
+    <!-- Hack-A-Week Problem Tutorial -->
+    <script src="../js/problemTutorial.js"></script>
+
+  </head>
+  <body>
+
+    <div>
+      <h1>Problem 4</h1>
+      <h3>
+        Create a website that people can visit to find out about movie offerings in Halifax.
+      </h3>
+
+      <div class="videoContainer">
+        <div class="video">
+          <video id="video" class="video-js vjs-default-skin"
+                 controls preload="auto" width="640" height="264"
+                 poster="http://video-js.zencoder.com/oceans-clip.png"
+                 >
+            <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+            <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+            <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+          </video>
+        </div>
+      </div>
+
+      <div class="textContainer">
+        <div id="code" class="code"></div>
+        <div class="preview">
+          Preview
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+
+      // CodeMirro Setup
+
+      // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+            mode: null},
+          {matches: /(text|application)\/(x-)?vb(a|script)/i,
+            mode: "vbscript"}]
+      };
+      //  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {mode: mixedMode, tabMode: "indent"});
+
+      var myCodeMirror = CodeMirror(document.getElementById("code"), {
+        //value: "function myScript(){return 100;}\n",
+        value: "",
+        mode: mixedMode,
+        indentUnit: 4,
+        smartIndent: true,
+        tabSize: 4,
+        indentWithTabs: true,
+        lineWrapping: true,
+        tabMode: "indent",
+        lineNumbers: true,
+        matchBrackets: true
+      });
+
+
+      // Hack-A-Week Problem tutor setup
+      $.ajax({
+        'async': true,
+        'global': false,
+        'url': "tutorial.json",
+        'dataType': "json",
+        'success': function(data) {
+          data = {
+            "videoElId": "video",
+            "codeMirrorObj": myCodeMirror,
+            "previewElSel": ".preview",
+            "tutorial": data
+          };
+          console.log("Tutorial data:", data);
+          tutor.init(data);
+        }
+      });
+    </script>
+
+
+
+  </body>
+</html>

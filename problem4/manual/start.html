@@ -1,0 +1,2295 @@
+<!-- Hack-A-Week - Problem 4 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Problem 4 Manual - Hack-A-Week</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href="../"/>
+    
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <!-- CodeMirror -->
+    <script src="../js/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../js/codemirror/lib/codemirror.css">
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/clike/clike.js"></script>
+    <script src="../js/codemirror/mode/php/php.js"></script>
+    <script src="../js/codemirror/mode/sql/sql.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+     // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+            mode: null},
+          {matches: /(text|application)\/(x-)?vb(a|script)/i,
+            mode: "vbscript"}]
+      };
+    </script>
+    <style type="text/css">
+      .CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+      }
+      .CodeMirror-scroll {
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      
+      body { 
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-bottom: 60px; /* 60px to make the container go all the way to the top of the bottombar */
+      }
+    </style>
+  
+    <!-- Twitter Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      // Update progress display as user scrolls down page.
+      $(window).scroll( function() { 
+        var progress = (($(window).scrollTop()+$(window).height())/$(document).height())*100;
+        $('.manualProgress .bar').css({'width':( progress +'%') });
+        if (progress >= 100)
+          $('.manualProgress').addClass('progress-success');
+        else
+          $('.manualProgress').removeClass('progress-success');
+      });
+      
+      // Code editor 
+      $(document).ready( function () { 
+        $.each( $('.codeEditor'), function( index, value ) {  
+          var mode = mixedMode; // Default: HTML, CSS, etc
+          mode = $(value).find('textarea.code').attr('data-mode') || mode;
+          var editor = CodeMirror.fromTextArea( $(value).find('textarea.code').get(0), {
+            lineNumbers: true,
+            matchBrackets: true,
+            continueComments: "Enter",
+            indentUnit: 4,
+            smartIndent: true,
+            tabSize: 4,
+            indentWithTabs: true,
+            lineWrapping: true,
+            tabMode: "indent",
+            mode: mode,
+            viewportMargin: Infinity
+          });
+          $( $(value).find('.preview') ).html( editor.getValue() );
+          editor.on("change", function() {
+             $( $(value).find('.preview') ).html( editor.getValue() );
+          });          
+        });
+      });
+      
+    </script>
+      
+  </head>
+  <body>
+  
+    <div class="container-fluid">
+    
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="#">Problem 4 Manual</a>
+            <ul class="nav">
+              <li><a href="manual/index.html">Home</a></li>
+              <li class="active"><a href="manual/start.html">Getting Started</a></li>
+              <li><a href="manual/advanced.html">Advanced</a></li>
+              <li><a href="done/" target="_blank">The Solution</a></li>
+              <li><a href="problem2.zip" target="_blank">Download Zip</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      <h1>Problem 4 Manual</h1>
+      <h2>
+        The Hack: <small class="alert alert-info">Develop a website for keeping track of exercise and diet patterns of a person.</small>
+      </h2>
+      
+      <hr/>
+      
+      
+      <h2><p class="badge badge-success">1.</p> Setup Your Workspace  <small class="text-info">The first thing you do, before the first thing you do</small></h2>
+      
+      <p class="lead">
+        Before going over the actual code used in the website it is useful to note the resources used in the making of this <em>hack</em>.
+        <br/>
+        <h3>Basics</h3>
+        <ul class="lead">
+          <li><a href="http://www.w3schools.com/html/html_intro.asp">HTML</a></li>
+          <li><a href="http://www.w3schools.com/css/css_intro.asp">CSS</a></li>
+          <li><a href="http://www.w3schools.com/js/js_intro.asp">JavaScript</a></li>
+        </ul>
+        <h3>Advanced</h3>
+        <ul class="lead">
+          <li><a href="http://jquery.com/">jQuery</a></li>
+          <li><a href="http://twitter.github.io/bootstrap/">Twitter Bootstrap</a></li>
+          <li><a href="http://www.w3schools.com/php/default.asp">PHP</a></li>
+          <li><a href="http://www.w3schools.com/sql/default.asp">MySQL</a> 
+          (with <a href="http://www.phpmyadmin.net/">phpMyAdmin</a>)</li>
+        </ul>
+        <p class="alert alert-warning">
+        You should refer to their website for further information if this manual and the advanced section is not sufficient.
+        </p>
+      </p>
+      
+      
+      <h3><p class="badge badge-success">1.1</p> First Thing's First <small class="text-info">Creating Your Workspace</small></h3>  
+      <div class="lead">
+        Decide where you want to work on your <em>hack</em> and create a folder.
+        
+        Inside your folder create a file called <code>index.html</code>.
+        This <code>index.html</code> file is where you will be working on your webpage <em>hack</em>.
+        <br />
+        Then create folders called <code>css</code>, <code>js</code>, and <code>php</code>.
+        Your workspace folder hierarchy should look like: <br/>
+        <div class="well well-small">
+        index.html <br/>
+        css / <br/>
+        js / <br/>
+        php / <br/>
+        </div>
+        
+      </div>
+      
+      <h3><p class="badge badge-success">1.2</p> MySQL  <small class="text-info">Database to Store Them All</small></h3>
+
+      <p class="lead">
+      Login into <a href="http://cs.smu.ca/phpmyadmin/">phpMyAdmin</a>.
+      Select your database. You should see a list of tabbed options at the top. 
+      Select <code class="text-info">SQL</code>.
+      Copy and paste the query code below into the input textarea of phpMyAdmin.
+      Click <button class="btn btn-small">Go</button>.
+      </p>
+
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-mysql">
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HAW_Diet`
+--
+
+CREATE TABLE IF NOT EXISTS `HAW_Diet` (
+  `DietId` int(13) unsigned NOT NULL AUTO_INCREMENT,
+  `UserId` int(11) unsigned NOT NULL,
+  `FoodId` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`DietId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HAW_Exercise`
+--
+
+CREATE TABLE IF NOT EXISTS `HAW_Exercise` (
+  `ExerciseId` int(10) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  `Description` text NOT NULL,
+  `Calories` decimal(6,1) unsigned NOT NULL,
+  PRIMARY KEY (`ExerciseId`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HAW_Food`
+--
+
+CREATE TABLE IF NOT EXISTS `HAW_Food` (
+  `FoodId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  `FoodGroup` int(1) unsigned NOT NULL COMMENT '0=Vegetables and fruits, 1=Grain products, 2=Milk, and 3=Meat',
+  `Calories` decimal(6,1) unsigned NOT NULL,
+  PRIMARY KEY (`FoodId`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HAW_User`
+--
+
+CREATE TABLE IF NOT EXISTS `HAW_User` (
+  `UserId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(255) NOT NULL,
+  `LastName` varchar(255) NOT NULL,
+  `EmailAddress` varchar(255) NOT NULL,
+  `LoginPassword` varchar(255) NOT NULL,
+  `DateAdded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserId`),
+  UNIQUE KEY `EmailAddress` (`EmailAddress`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HAW_Workout`
+--
+
+CREATE TABLE IF NOT EXISTS `HAW_Workout` (
+  `WorkoutId` int(13) unsigned NOT NULL AUTO_INCREMENT,
+  `UserId` int(11) unsigned NOT NULL,
+  `ExerciseId` int(13) unsigned NOT NULL,
+  `Sets` int(3) unsigned NOT NULL,
+  `Reps` int(3) unsigned NOT NULL,
+  PRIMARY KEY (`WorkoutId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+            </textarea>
+          </div>
+        </section>
+      </div>
+      
+      <p class
+      
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <hr/>
+
+      <h2><p class="badge badge-success">2.</p> HTML  <small class="text-info">HyperText Markup Language</small></h2>
+      <p class="lead">
+      In this step we are dealing with the basic HTML files that your visitors will see.
+      </p>
+      <h3><p class="badge badge-success">2.1</p> index.html <small class="text-info">The Redirection Page</small></h2>
+      <p class="lead">
+      Copy the code below and paste into your <code>index.html</code> file. 
+      If you load this file in a web-browser you will notice that very little actually appears 
+      and your should actually be redirected to the <code>home.html</code> page, which is our next sub-step.
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!-- Required DOCTYPE for HTML5 -->
+<!DOCTYPE html>
+<!-- Opening HTML tag -->
+<html lang="en">
+  <!-- All of the header information -->
+  <head>
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    <!-- HTML Redirect to home.html -->
+    <meta HTTP-EQUIV="REFRESH" content="0; url=home.html">
+  </head>
+  <!-- Webpage body content -->
+  <body>
+    Please click <a href="home.html">here to go to the Home.html page</a>.
+  </body>
+</html>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <h3><p class="badge badge-success">2.2</p> home.html <small class="text-info">The Landing Page</small></h2>
+      <p class="lead">
+      In your workspace create a file called <code>home.html</code>.
+      Copy the code below and paste into your <code>home.html</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body class="not-logged-in">
+  
+    <div class="container">
+    
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Problem 4</a>
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+
+            <li class="divider-vertical"></li>
+
+            <li class=""><a href="foods.html">Foods</a></li>
+            <li class=""><a href="exercises.html">Exercises</a></li>
+
+            <li class="divider-vertical"></li>
+      
+            <div class="not-logged-in-only navbar-form pull-right form-inline">
+              <input id="email" type="text" class="input-small" placeholder="Email">
+              <input id="password" type="password" class="input-small" placeholder="Password">
+              <button type="submit" class="btn" onclick="login($('#email').val(),$('#password').val());">Sign in</button>
+            </div>
+            
+            <li class="logged-in-only dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="userName">Account</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="account.html">View Account</a></li>
+                <li><a href="#" onclick="logout();">Logout</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+          
+      <div id="content">
+    
+        <section class="not-logged-in-only">
+        
+          <div class="hero-unit">
+            <h1>Problem 4</h1>
+            <p>Track you exercise and diet.</p>
+            <p>
+              <!-- Button to trigger modal -->
+              <a href="#registerModal" data-toggle="modal" class="btn btn-primary btn-large">
+                Register now
+              </a>
+            </p>
+          </div>
+ 
+          <!-- Modal -->
+          <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputFirstName">First Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputFirstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputLastName">Last Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Email</label>
+                  <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPassword">Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPasswordConfirm" placeholder="Confirm Password">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="registerUser();">Submit and Register</button>
+            </div>
+          </div>
+            
+        </section>
+      
+        <section class="logged-in-only">
+          <h1>Welcome, <span class="userName">User</span>!</h1>
+          
+          <p class="lead">Please view your account and begin adding your exercise and diet information!</p>
+          <a class="btn btn-large btn-primary" type="button" href="account.html">View Account &raquo;</a>
+          
+        </section>   
+      
+      </div>
+         
+    </div>
+    
+  </body>
+  
+</html>
+            </textarea>
+          </div>
+          <br />
+          <h3>Preview:</h3>
+          <div class="preview span12 well">
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <h3><p class="badge badge-success">2.3</p> foods.html <small class="text-info">The Foods Page</small></h2>
+      <p class="lead">
+      In your workspace, create a file called <code>foods.html</code>.
+      Copy the code below and paste into your <code>foods.html</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      var updateFoods = function () { 
+        food( undefined, function(data) { 
+            console.log("test",data.result);
+            var arr = [];
+            $.each( data.result, function(index, value) {
+
+            arr.push( [ value.Name, value.Calories ] );
+
+            });
+            console.log(arr);
+            displayTable("#foodsTable", ["Name","Calories"], arr);
+          } ) ;
+        };        
+      $(document).ready( function() { 
+        updateFoods();
+      });
+    </script>
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body class="not-logged-in">
+  
+    <div class="container">
+    
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Problem 4</a>
+          <ul class="nav">
+            <li><a href="home.html">Home</a></li>
+
+            <li class="divider-vertical"></li>
+
+            <li class="active"><a href="#">Foods</a></li>
+            <li class=""><a href="exercises.html">Exercises</a></li>
+
+            <li class="divider-vertical"></li>
+      
+            <div class="not-logged-in-only navbar-form pull-right form-inline">
+              <input id="email" type="text" class="input-small" placeholder="Email">
+              <input id="password" type="password" class="input-small" placeholder="Password">
+              <button type="submit" class="btn" onclick="login($('#email').val(),$('#password').val());">Sign in</button>
+            </div>
+            
+            <li class="logged-in-only dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="userName">Account</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="account.html">View Account</a></li>
+                <li><a href="#" onclick="logout();">Logout</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+          
+      <div id="content">
+    
+        <section class="not-logged-in-only">
+        
+          <div class="hero-unit">
+            <h1>Problem 4</h1>
+            <p>Track you exercise and diet.</p>
+            <p>
+              <!-- Button to trigger modal -->
+              <a href="#registerModal" data-toggle="modal" class="btn btn-primary btn-large">
+                Register now
+              </a>
+            </p>
+          </div>
+           <!-- Modal -->
+          <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputFirstName">First Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputFirstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputLastName">Last Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Email</label>
+                  <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPassword">Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPasswordConfirm" placeholder="Confirm Password">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="registerUser();">Submit and Register</button>
+            </div>
+          </div>
+                   
+        </section>
+      
+        <section class="logged-in-only">
+          
+          <h2>Foods
+          <a href="#addFoodModal" data-toggle="modal" class="btn btn-primary">
+            Add Food
+          </a>
+          </h2>
+
+          <table id="foodsTable" class="table table-bordered table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Calories</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+          
+          <!-- Modal -->
+          <div id="addFoodModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Add Food</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputName">Food Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputName" placeholder="Food Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputFoodGroup">Food Group</label>
+                  <div class="controls">
+                  
+                    <label>
+                    <input type="radio" name="inputFoodGroup" value="0"> Vegetables and Fruits<br>
+                    </label>
+                    <label>
+                    <input type="radio" name="inputFoodGroup" value="1"> Grain products<br>
+                    </label>
+                    <label>
+                    <input type="radio" name="inputFoodGroup" value="2"> Dairy<br>
+                    </label>
+                    <label>
+                    <input type="radio" name="inputFoodGroup" value="3"> Meat<br>
+                    </label>
+
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputCalories">Calories</label>
+                  <div class="controls">
+                    <input type="number" id="inputCalories" placeholder="Calories" value="0">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="addFood( );">Add New Food</button>
+            </div>
+          </div>
+          
+        </section>   
+      
+      </div>
+         
+    </div>
+    
+  </body>
+  
+</html>
+            </textarea>
+          </div>
+          <br/>
+          <h3>Preview:</h3>
+          <div class="preview span12 well">
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">2.4</p> exercises.html <small class="text-info">The Exercises Page</small></h2>
+      <p class="lead">
+      In your workspace, create a file called <code>exercises.html</code>.
+      Copy the code below and paste into your <code>exercises.html</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      var updateExercises = function ( ) {
+          exercise( undefined, function(data) { 
+            var arr = [];
+            $.each( data.result, function(index, value) {
+              arr.push( [ value.Name, value.Description, value.Calories ] );
+            });
+            console.log(arr);
+            displayTable("#exercisesTable", ["Name","Description", "Calories"], arr);
+          } ) ;
+        };
+      $(document).ready( function() { 
+        updateExercises();
+      });
+    </script>
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body class="not-logged-in">
+  
+    <div class="container">
+    
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Problem 4</a>
+          <ul class="nav">
+            <li class="home.html"><a href="home.html">Home</a></li>
+
+            <li class="divider-vertical"></li>
+
+            <li class=""><a href="foods.html">Foods</a></li>
+            <li class="active"><a href="#">Exercises</a></li>
+
+            <li class="divider-vertical"></li>
+      
+            <div class="not-logged-in-only navbar-form pull-right form-inline">
+              <input id="email" type="text" class="input-small" placeholder="Email">
+              <input id="password" type="password" class="input-small" placeholder="Password">
+              <button type="submit" class="btn" onclick="login($('#email').val(),$('#password').val());">Sign in</button>
+            </div>
+            
+            <li class="logged-in-only dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="userName">Account</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="account.html">View Account</a></li>
+                <li><a href="#" onclick="logout();">Logout</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+          
+      <div id="content">
+    
+        <section class="not-logged-in-only">
+        
+          <div class="hero-unit">
+            <h1>Problem 4</h1>
+            <p>Track you exercise and diet.</p>
+            <p>
+              <!-- Button to trigger modal -->
+              <a href="#registerModal" data-toggle="modal" class="btn btn-primary btn-large">
+                Register now
+              </a>
+            </p>
+          </div>
+ 
+          <!-- Modal -->
+          <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputFirstName">First Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputFirstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputLastName">Last Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Email</label>
+                  <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPassword">Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPasswordConfirm" placeholder="Confirm Password">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="registerUser();">Submit and Register</button>
+            </div>
+          </div>
+        
+            
+        </section>
+      
+        <section class="logged-in-only">
+
+          <h2>Exercises
+          <a href="#addExerciseModal" data-toggle="modal" class="btn btn-primary">
+            Add Exercise
+          </a>
+          </h2>          
+          <table id="exercisesTable" class="table table-bordered table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Calories</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+          
+          <!-- Modal -->
+          <div id="addExerciseModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Add Exercise</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputName">Exercise Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputName" placeholder="Exercise Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputDescription">Description</label>
+                  <div class="controls">
+                  
+                    <input type="text" id="inputDescription" placeholder="Exercise Description">
+
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputCalories">Calories</label>
+                  <div class="controls">
+                    <input type="number" id="inputCalories" min="0" placeholder="Calories" value="0">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="addExercise( );">Add New Exercise</button>
+            </div>
+          </div>
+          
+        </section>   
+      
+      </div>
+         
+    </div>
+    
+  </body>
+  
+</html>
+            </textarea>
+          </div>
+          <br/>
+          <h3>Preview:</h3>
+          <div class="preview span12 well">
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">2.5</p> account.html <small class="text-info">The Account Page</small></h2>
+      <p class="lead">
+      In your workspace, create a file called <code>account.html</code>.
+      Copy the code below and paste into your <code>account.html</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      $(document).ready( function() { 
+/*        
+        exercise( undefined, function(data) { 
+          var arr = [];
+          $.each( data.result, function(index, value) {
+            arr.push( [ value.Name, value.Description, value.Calories ] );
+          });
+          console.log(arr);
+          displayTable("#exercisesTable", ["Name","Description", "Calories"], arr);
+        } ) ;
+*/        
+      });
+    </script>
+
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body class="not-logged-in">
+  
+    <div class="container">
+    
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Problem 4</a>
+          <ul class="nav">
+            <li class=""><a href="home.html">Home</a></li>
+
+            <li class="divider-vertical"></li>
+
+            <li class=""><a href="foods.html">Foods</a></li>
+            <li class=""><a href="exercises.html">Exercises</a></li>
+
+            <li class="divider-vertical"></li>
+      
+            <div class="not-logged-in-only navbar-form pull-right form-inline">
+              <input id="email" type="text" class="input-small" placeholder="Email">
+              <input id="password" type="password" class="input-small" placeholder="Password">
+              <button type="submit" class="btn" onclick="login($('#email').val(),$('#password').val());">Sign in</button>
+            </div>
+            
+            <li class="logged-in-only dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="userName">Account</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">View Account</a></li>
+                <li><a href="#" onclick="logout();">Logout</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+          
+      <div id="content">
+    
+        <section class="not-logged-in-only">
+        
+          <div class="hero-unit">
+            <h1>Problem 4</h1>
+            <p>Track you exercise and diet.</p>
+            <p>
+              <!-- Button to trigger modal -->
+              <a href="#registerModal" data-toggle="modal" class="btn btn-primary btn-large">
+                Register now
+              </a>
+            </p>
+          </div>
+ 
+          <!-- Modal -->
+          <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputFirstName">First Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputFirstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputLastName">Last Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Email</label>
+                  <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPassword">Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPasswordConfirm" placeholder="Confirm Password">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="registerUser();">Submit and Register</button>
+            </div>
+          </div>
+                    
+        </section>
+      
+        <section class="logged-in-only">
+          <div class="page-header">
+            <h1>Welcome, <span class="userName">User</span>!</h1>
+          </div>
+          
+          <h2>Diet</h2>
+          <table id="diet" class="table table-bordered table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Calories</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- TODO: This is where you can add your custom content! -->
+              <tr>
+                <td>Insert Food Name Here</td>
+                <td>Insert Calories for Food Here</td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <hr/>          
+          
+          <h2>Workout</h2>
+          <table id="diet" class="table table-bordered table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Exercise</th>
+                <th>Calories</th>
+                <th>Sets</th>
+                <th>Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- TODO: This is where you can add your custom content! -->
+              <tr>
+                <td>Insert Exercise Name Here</td>
+                <td>Insert Calories for Exercise Here</td>
+                <td>Insert # of Sets Here</td>
+                <td>Insert # of Reps Here</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+        </section>   
+      
+      </div>
+         
+    </div>
+    
+  </body>
+  
+</html>
+            </textarea>
+          </div>
+          <br/>
+          <h3>Preview:</h3>
+          <div class="preview span12 well">
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <hr />
+      
+      <h2><p class="badge badge-success">3.</p> JavaScript & CSS  <small class="text-info">Flashy & Interactive</small></h2>
+      <p class="lead">
+      JavaScript adds more interactiveness to the webpage for visitors. 
+      <abbr title"Cascading Style Sheet">CSS</abbr> also adds to the aesthetic appeal of the page.
+      </p>
+      <h3><p class="badge badge-success">3.1</p> main.js <small class="text-info">Visitor Interactiveness</small></h2>
+      <p class="lead">
+      In the <code>js</code> folder of your workspace, create a file called <code>main.js</code>.
+      Copy the code below and paste into your <code>main.js</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/javascript">
+//===== Main.js =====
+
+// Events
+$(document).ready( function ( ) { 
+  // When the document is fully finished loading
+  // the following will be executed.
+  
+  // Get the current user's information
+  // This will also check if there is in fact a user signed in or not and deal with the page appropriately.
+  getUserInfo();
+  
+});
+
+// User functions
+function registerUser( callback ) {
+  // Get user input
+  var firstName = $("#inputFirstName").val();
+  var lastName = $("#inputLastName").val();
+  var email = $("#inputEmail").val();
+  var password = $("#inputPassword").val();
+  var confirm = $("#inputPasswordConfirm").val();
+
+  console.log(firstName, lastName, email, password, confirm);
+  
+  // Validate
+  if ( password === confirm ) {
+    console.log("Valid");
+    // Submit registration
+    $.getJSON(
+    "php/register.php", 
+    { 
+      "firstName": firstName, "lastName": lastName, 
+      "emailAddress": email, "loginPassword": password 
+    }, 
+    function(data) {
+      console.log(data);
+      if ( callback )
+        callback(data);
+      // Check if successfully logged in
+      if (data.successful) {
+        // Registered
+        $('#registerModal').modal('hide');
+        displayModal("Successful", "You are now registered.  Now you may login.", "success");
+      } else {
+        // Not registered
+        displayModal("Error", data.error||"Registration was unsuccessful.", "error");
+      }    
+    });
+  
+  } else {
+  // Not valid 
+  
+  }
+  
+}
+
+function login( emailAddress , loginPassword , callback) { 
+  $.getJSON(
+  "php/login.php", 
+  { "emailAddress": emailAddress, "loginPassword": loginPassword }, 
+  function(data) {
+    console.log(data);
+    
+    if ( callback )
+      callback(data);
+      
+    // Check if successfully logged in
+    if (data.successful) {
+      // Logged in
+      $('body').removeClass("not-logged-in").addClass("logged-in");
+      getUserInfo();
+    } else {
+      // Not logged in
+      $('body').removeClass("logged-in").addClass("not-logged-in"); 
+      displayModal("Error", data.error||"Login unsuccessful.", "success");    
+    }
+    
+  });
+}
+
+function getUserInfo( callback ) {
+  $.getJSON("php/currentUser.php", function(data) {
+    console.log(data);
+
+    if ( callback )
+      callback(data);
+
+    // Check if successfully retrieved current user information
+    if (data.successful) {
+      // Successful
+      $('body').removeClass("not-logged-in").addClass("logged-in");
+      // Change account name to the new name of the user who is currently logged in.
+      $(".userName").html( data.result[0].FirstName + " " + data.result[0].LastName );
+    } else {
+      // Not successful
+    }    
+  });
+}
+
+function logout( callback ) {
+  $.getJSON("php/logout.php", function(data) {
+    console.log(data);
+
+    if ( callback )
+      callback(data);
+
+    // Check if successfully logged out
+    if (data.successful) {
+      // Logged out
+      $('body').removeClass("logged-in").addClass("not-logged-in");
+    } else {
+      // Not logged out
+      displayModal("Error", data.error||"Logout unsuccessful.", "error");    
+    }
+
+  });
+  
+}
+
+// Get Data from Database functions
+function exercise( exerciseId , callback) {
+  $.getJSON(
+  "php/exercise.php", 
+  (exerciseId)?{ "id":exerciseId }:undefined, function(data) {
+    console.log(data);
+
+    if ( callback )
+      callback(data);
+    
+    // Check if successfully retrieved current user information
+    if (data.successful) {
+      // Successful
+    } else {
+      // Not successful
+    }    
+  });
+}
+
+// Get Data from Database functions
+function food( foodId , callback) {
+  $.getJSON(
+  "php/food.php", 
+  (foodId)?{ "id": foodId }:undefined, function(data) {
+    console.log(data);
+
+    if ( callback )
+      callback(data);
+    
+    // Check if successfully retrieved current user information
+    if (data.successful) {
+      // Successful
+    } else {
+      // Not successful
+    }    
+  });
+}
+
+// Adding more data
+function addFood( callback ) {
+  // Get user input
+  var name = $("#inputName").val();
+  var foodGroup = $("input[name='inputFoodGroup']:checked").val();
+  var calories = $("#inputCalories").val();
+
+  console.log(name, foodGroup, calories);
+  
+  // Validate
+  if ( name && foodGroup && calories ) {
+    console.log("Valid");
+    // Submit registration
+    $.getJSON(
+    "php/addFood.php", 
+    { 
+      "name": name, "foodGroup": foodGroup, 
+      "calories": calories
+    }, 
+    function(data) {
+      console.log(data);
+      
+      if ( callback )
+        callback(data);
+      else {
+        // Check if successfully logged in
+        if (data.successful) {
+          // Logged in
+          $('#addFoodModal').modal('hide'); 
+          displayModal("Successful", "Food was successfully added.", "success");    
+          if ( updateFoods )
+            updateFoods();
+        } else {
+          // Not logged in
+          displayModal("Error", data.error||"", "error");    
+        }
+      }
+    
+    });
+  
+  } else {
+    // Not valid 
+    console.log("Invalid");
+    displayModal("Error", "Invalid data. Please try again.", "error");    
+  }
+  
+}
+
+
+function addExercise( callback ) {
+  // Get user input
+  var name = $("#inputName").val();
+  var description = $("#inputDescription").val();
+  var calories = $("#inputCalories").val();
+
+  console.log(name, description, calories);
+  console.log(callback);
+  
+  // Validate
+  if ( name && description && calories ) {
+    console.log("Valid");
+    // Submit registration
+    $.getJSON(
+    "php/addExercise.php", 
+    { 
+      "name": name, "description": description, 
+      "calories": calories
+    }, 
+    function(data) {
+      console.log(data);
+      
+      if ( callback )
+        callback(data);
+      else {
+        // Check if successfully logged in
+        if (data.successful) {
+          // Logged in
+          $('#addExerciseModal').modal('hide'); 
+          displayModal("Successful", "Exercise was successfully added.", "success");    
+          if ( updateExercises )
+            updateExercises();
+        } else {
+          // Not logged in
+          console.log("Invalid");
+          displayModal("Error", data.error||"", "error");    
+        }
+      }
+          
+    });
+  
+  } else {
+  // Not valid 
+  
+  }
+  
+}
+
+
+// Display functions
+function displayTable(selector, headers, data) {
+
+  // Headers
+  $(selector).find("thead").html("").append("<tr></tr>");
+  $.each(headers, function(index, value) {
+    console.log(index, value);
+    $(selector).find("thead").find("tr").append("<th>"+value+"</th>");
+  });
+  
+  // Table content data
+  $(selector).find("tbody").html("");
+  $.each(data, function(rowIndex, rowValue) {
+    var row = $("<tr></tr>");  
+    $.each(rowValue, function(colIndex, colValue) {
+      row.append("<td>"+colValue+"</td>");
+    });
+    $(selector).find("tbody").append(row);
+  });
+ 
+}
+
+function displayModal(heading, message, status) {
+  $("<div class='modal hide fade' tabindex='-1' role='dialog'>"+
+  '<div class="modal-header">'+
+  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'+
+  '<h3 id="tempModal">'+heading+'</h3>'+
+  '</div>'+
+  "<div class='modal-body'><div class='text-"+status+"'>"+
+  message+
+  "</div></div>"+
+  "<div class='modal-footer'>"+
+  "<button class='btn btn-"+status+"' data-dismiss='modal' aria-hidden='true'>Close</button>"+
+  "</div>"+
+  "</div>")
+  .modal();
+}
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">3.2</p> style.css <small class="text-info">Cascading Style Sheet</small></h2>
+      <p class="lead">
+      In the <code>css</code> folder in your workspace, create a file called <code>style.css</code>.
+      Copy the code below and paste into your <code>style.css</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/css">
+/* style.css */
+
+body.logged-in .not-logged-in-only {
+  display: none;
+}
+
+body.not-logged-in .logged-in-only {
+  display: none;
+}
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+           
+      <hr />
+      
+      <h2><p class="badge badge-success">4.</p> PHP  <small class="text-info">The Server-Side</small></h2>
+      <p class="lead">
+      <a href="http://www.w3schools.com/php/">PHP</a> is the language we are using on the <a href="http://en.wikipedia.org/wiki/Server-side_scripting">Server-Side</a>. 
+      </p>
+      <h3><p class="badge badge-success">4.1</p> init.php <small class="text-info">Connecting to the Database</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>init.php</code>.
+      Copy the code below and paste into your <code>init.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+  // Make the connection to the database
+  $db = new mysqli("localhost", "USERNAME", "PASSWORD", "DATABASE");
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <div class="lead alert alert-danger">
+        <strong>Important</strong>: Make the following changes: <br/>
+        <dl class="dl-horizontal">
+          <dt>USERNAME</dt>
+          <dd>This is your phpMyAdmin username, such as hack01.</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>PASSWORD</dt>
+          <dd>This is your phpMyAdmin password for the username used above.</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>DATABASE</dt>
+          <dd>This is your phpMyAdmin database name, such as hack01.</dd>
+        </dl>
+      </div>      
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">4.2</p> login.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>login.php</code>.
+      Copy the code below and paste into your <code>login.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['emailAddress'] ) || !isset( $_GET['loginPassword'] ) ) {
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Either 'emailAddress' or 'loginPassword' was not sent."; // Indicate the error that occured.
+    echo json_encode($json);   
+  } else {
+    // Create MySQL Query
+    $emailAddress = $db->escape_string( $_GET['emailAddress'] );
+    $loginPassword = $db->escape_string( $_GET['loginPassword'] );
+    $sql = "SELECT * FROM `HAW_User` WHERE `EmailAddress` = '".$emailAddress."' AND `LoginPassword` = '".$loginPassword."';";
+  
+    // Run Query and check if successful
+    if($result = $db->query($sql) ) {
+      if ( $result->num_rows == 1 ) { 
+        // Query executed with no errors
+        $json['successful'] = true; // Indicate that the query was successful
+        // Save the UserId that was found 
+        $row = $result->fetch_assoc();
+        $_SESSION['UserId'] = $row['UserId'];
+               
+        // Only for debugging purposes
+        // $json['UserId'] = $_SESSION['UserId']; // Indicate that the query was successful
+        // Return the JSON object
+        echo json_encode($json); 
+        
+      } else {
+        // There was an error
+        $json['successful'] = false; // Indicate that the query was not successful
+        $json['error'] = "The email and/or password is invalid."; // Indicate the error that occured.
+        echo json_encode($json);   
+      }
+    } else {
+      // There was an error
+      $json['successful'] = false; // Indicate that the query was not successful
+      $json['error'] = $db->error; // Indicate the error that occured.
+      echo json_encode($json);   
+      //die('There was an error running the query [' . $db->error . ']');
+    }
+    $result->close();
+  }
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">4.3</p> logout.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>logout.php</code>.
+      Copy the code below and paste into your <code>logout.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Logout by unsetting the `UserId` variable
+  unset($_SESSION['UserId']);
+  // After logged out, return successful result
+  $json = array("successful" => true);
+  echo json_encode($json);   
+  
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <h3><p class="badge badge-success">4.4</p> register.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>register.php</code>.
+      Copy the code below and paste into your <code>register.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  /**
+  Source: http://www.linuxjournal.com/article/9585?page=0,3
+  Validate an email address.
+  Provide email address (raw input)
+  Returns true if the email address has the email 
+  address format and the domain exists.
+  */
+  function validEmail($email)
+  {
+     $isValid = true;
+     $atIndex = strrpos($email, "@");
+     if (is_bool($atIndex) && !$atIndex)
+     {
+        $isValid = false;
+     }
+     else
+     {
+        $domain = substr($email, $atIndex+1);
+        $local = substr($email, 0, $atIndex);
+        $localLen = strlen($local);
+        $domainLen = strlen($domain);
+        if ($localLen < 1 || $localLen > 64)
+        {
+           // local part length exceeded
+           $isValid = false;
+        }
+        else if ($domainLen < 1 || $domainLen > 255)
+        {
+           // domain part length exceeded
+           $isValid = false;
+        }
+        else if ($local[0] == '.' || $local[$localLen-1] == '.')
+        {
+           // local part starts or ends with '.'
+           $isValid = false;
+        }
+        else if (preg_match('/\\.\\./', $local))
+        {
+           // local part has two consecutive dots
+           $isValid = false;
+        }
+        else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain))
+        {
+           // character not valid in domain part
+           $isValid = false;
+        }
+        else if (preg_match('/\\.\\./', $domain))
+        {
+           // domain part has two consecutive dots
+           $isValid = false;
+        }
+        else if
+  (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
+                   str_replace("\\\\","",$local)))
+        {
+           // character not valid in local part unless 
+           // local part is quoted
+           if (!preg_match('/^"(\\\\"|[^"])+"$/',
+               str_replace("\\\\","",$local)))
+           {
+              $isValid = false;
+           }
+        }
+        if ($isValid && !(checkdnsrr($domain,"MX") || 
+   ↪checkdnsrr($domain,"A")))
+        {
+           // domain not found in DNS
+           $isValid = false;
+        }
+     }
+     return $isValid;
+  }
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['emailAddress'] ) 
+        || !isset( $_GET['loginPassword'] )
+        || !isset( $_GET['firstName'] ) 
+        || !isset( $_GET['lastName'] ) 
+        ) {
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Either 'firstName' or 'lastName' or 'emailAddress' or 'loginPassword' was not sent."; // Indicate the error that occured.
+    echo json_encode($json);  
+  
+  } else if ( !validEmail( $_GET['emailAddress'] ) ) {
+    
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Email address is invalid."; // Indicate the error that occured.
+    echo json_encode($json);  
+    
+  } else {
+    // Create MySQL Query
+    $emailAddress = $db->escape_string( $_GET['firstName'] );
+    $emailAddress = $db->escape_string( $_GET['lastName'] );
+    $emailAddress = $db->escape_string( $_GET['emailAddress'] );
+    $loginPassword = $db->escape_string( $_GET['loginPassword'] );
+    
+    $sql = "INSERT INTO  `HAW_User` ( ".
+      "`UserId` , ".
+      "`FirstName` , ".
+      "`LastName` , ".
+      "`EmailAddress` , ".
+      "`LoginPassword` , ".
+      "`DateAdded` ".
+      ") ".
+      "VALUES ( ".
+      "NULL ,  '".$firstName."',  '".$lastName."',  '".$emailAddress."',  '".$loginPassword."', ".
+      "CURRENT_TIMESTAMP );";
+      
+    // Run Query and add user
+    if ( $db->query($sql) === TRUE ) {
+
+      $json['successful'] = true; // Indicate that the query was successful
+      $json['EmailAddress'] = $emailAddress;
+      echo json_encode($json);   
+    
+    } else {
+    
+      $json['successful'] = false; // Indicate that the query was not successful
+      $json['error'] = "Query executed unsuccessfully.";
+      echo json_encode($json);   
+    
+    }
+    
+  }
+  
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <h3><p class="badge badge-success">4.5</p> currentUser.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>currentUser.php</code>.
+      Copy the code below and paste into your <code>currentUser.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_SESSION['UserId'] ) ) {
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Not currently logged in."; // Indicate the error that occured.
+    echo json_encode($json);   
+     
+  } else {
+  
+    // Create MySQL Query
+    $id = $db->escape_string( $_SESSION['UserId'] );
+    $sql = "SELECT UserId, FirstName, LastName, EmailAddress, DateAdded FROM `HAW_User` WHERE `UserId` = '".$id."';";
+  
+    // Run Query and check if successful
+    if($result = $db->query($sql)) { 
+      // Query executed with no errors
+      $json['successful'] = true; // Indicate that the query was successful
+      // Now add the result from the query to the JSON object
+      $json['result'] = array();
+      $row = $result->fetch_object();
+      $tempArray = $row;
+      array_push($json['result'], $tempArray);
+      // Return the JSON object
+      echo json_encode($json);
+    } else {
+      // There was an error
+      $json['successful'] = false; // Indicate that the query was not successful
+      $json['error'] = $db->error; // Indicate the error that occured.
+      echo json_encode($json);   
+      //die('There was an error running the query [' . $db->error . ']');
+    }
+    $result->close();
+  }
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+
+      <h3><p class="badge badge-success">4.6</p> food.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>food.php</code>.
+      Copy the code below and paste into your <code>food.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['id'] ) ) {
+  /*
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "The 'id' is not set"; // Indicate the error that occured.
+    echo json_encode($json);   
+  */
+  
+    // Create MySQL Query
+    $sql = "SELECT * FROM `HAW_Food` ORDER BY `Name`;";
+    
+  } else {
+  
+    // Create MySQL Query
+    $id = $db->escape_string( $_GET['id'] );
+    $sql = "SELECT * FROM `HAW_Food` WHERE `FoodId` = '".$id."' ORDER BY `Name`;";
+  }
+
+  // Run Query and check if successful
+  if($result = $db->query($sql)) { 
+    // Query executed with no errors
+    $json['successful'] = true; // Indicate that the query was successful
+    // Now add the result from the query to the JSON object
+    $json['result'] = array();
+    while($row = $result->fetch_object()) {
+      $tempArray = $row;
+      array_push($json['result'], $tempArray);    
+    }
+    // Return the JSON object
+    echo json_encode($json);
+  } else {
+    // There was an error
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = $db->error; // Indicate the error that occured.
+    echo json_encode($json);   
+    //die('There was an error running the query [' . $db->error . ']');
+  }
+  $result->close();
+
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+
+      <h3><p class="badge badge-success">4.7</p> exercise.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>exercise.php</code>.
+      Copy the code below and paste into your <code>exercise.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['id'] ) ) {
+    /*
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "The 'id' is not set"; // Indicate the error that occured.
+    echo json_encode($json);   
+    */
+  
+    // Create MySQL Query
+    $sql = "SELECT * FROM `HAW_Exercise` ORDER BY `Name`;";
+     
+  } else {
+  
+    // Create MySQL Query
+    $id = $db->escape_string( $_GET['id'] );
+    $sql = "SELECT * FROM `HAW_Exercise` WHERE `ExerciseId` = '".$id."' ORDER BY `Name`;";
+  
+  }
+  
+  // Run Query and check if successful
+  if($result = $db->query($sql)) { 
+    // Query executed with no errors
+    $json['successful'] = true; // Indicate that the query was successful
+    // Now add the result from the query to the JSON object
+    $json['result'] = array();
+    while($row = $result->fetch_object()) {
+      $tempArray = $row;
+      array_push($json['result'], $tempArray);    
+    }
+    // Return the JSON object
+    echo json_encode($json);
+  } else {
+    // There was an error
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = $db->error; // Indicate the error that occured.
+    echo json_encode($json);   
+    //die('There was an error running the query [' . $db->error . ']');
+  }
+  
+  $result->close();
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <h3><p class="badge badge-success">4.8</p> addFood.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>addFood.php</code>.
+      Copy the code below and paste into your <code>addFood.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['name'] ) 
+        || !isset( $_GET['foodGroup'] )
+        || !isset( $_GET['calories'] ) 
+        ) {
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Either 'name' or 'foodGroup' or 'calories' was not sent."; // Indicate the error that occured.
+    echo json_encode($json);   
+  } else {
+    // Create MySQL Query
+    $name = $db->escape_string( $_GET['name'] );
+    $foodGroup = $db->escape_string( $_GET['foodGroup'] );
+    $calories = $db->escape_string( $_GET['calories'] );
+    
+    $sql = "INSERT INTO  `HAW_Food` ( ".
+      "`FoodId` , ".
+      "`Name` , ".
+      "`FoodGroup` , ".
+      "`Calories` ".
+      ") ".
+      "VALUES ( ".
+      "NULL ,  '".$name."',  '".$foodGroup."',  '".$calories."' );";
+      
+    // Run Query and add user
+    if ( $db->query($sql) === TRUE ) {
+
+      $json['successful'] = true; // Indicate that the query was successful
+      echo json_encode($json);   
+    
+    } else {
+    
+      $json['successful'] = false; // Indicate that the query was not successful
+      $json['error'] = "Query executed unsuccessfully.";
+      echo json_encode($json);   
+    
+    }
+    
+  }
+  
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+      
+      <h3><p class="badge badge-success">4.9</p> addExercise.php <small class="text-info">Server-Side Interaction</small></h2>
+      <p class="lead">
+      In the <code>php</code> folder in your workspace, create a file called <code>addExercise.php</code>.
+      Copy the code below and paste into your <code>addExercise.php</code> file. 
+      </p>      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;" data-mode="text/x-php">
+<?PHP
+  // Start session
+  session_start();	
+
+  // Include the init.php file
+  require("./init.php");
+  
+  // Create JSON object for later
+  $json = array();
+  
+  if ( !isset( $_GET['name'] ) 
+        || !isset( $_GET['description'] )
+        || !isset( $_GET['calories'] ) 
+        ) {
+    $json['successful'] = false; // Indicate that the query was not successful
+    $json['error'] = "Either 'name' or 'description' or 'calories' was not sent."; // Indicate the error that occured.
+    echo json_encode($json);   
+  } else {
+    // Create MySQL Query
+    $name = $db->escape_string( $_GET['name'] );
+    $description = $db->escape_string( $_GET['description'] );
+    $calories = $db->escape_string( $_GET['calories'] );
+    
+    $sql = "INSERT INTO  `HAW_Exercise` ( ".
+      "`ExerciseId` , ".
+      "`Name` , ".
+      "`Description` , ".
+      "`Calories` ".
+      ") ".
+      "VALUES ( ".
+      "NULL ,  '".$name."',  '".$description."',  '".$calories."' );";
+      
+    // Run Query and add user
+    if ( $db->query($sql) === TRUE ) {
+
+      $json['successful'] = true; // Indicate that the query was successful
+      echo json_encode($json);   
+    
+    } else {
+    
+      $json['successful'] = false; // Indicate that the query was not successful
+      $json['error'] = "Query executed unsuccessfully.";
+      echo json_encode($json);   
+    
+    }
+    
+  }
+  
+  $db->close();
+
+?>
+            </textarea>
+          </div>
+        </section>
+      </div>
+      <p class="alert alert-info">
+      To learn more please see the advanced section of this manual. 
+      <a href="manual/advanced.html" class="btn btn-primary btn-small">Go To Advanced Section Now! &raquo;</a>
+      </p>
+
+      <hr />
+      
+      
+      <h2><p class="badge badge-success">5.</p> Finished  <small class="text-info">Verifying Your <code>index.html</code></small></h2>
+      
+      <p class="lead">
+        Test it out! You should now have a working website with a working login, logout, and register system and more!
+      </p>
+      
+      <hr />
+      
+      <div class="hero-unit">
+        <h1>Congratulations</h1>
+        <p class="alert alert-success">
+        You now have a working webpage. 
+        This can be used to jump start your hack if you prefer, 
+        or you may use what you learn in this manual to create something completely different.
+        </p>
+        <p>
+          <a href="manual/advanced.html" class="btn btn-primary btn-large">
+            Learn more &raquo;
+          </a>
+        </p>
+      </div>
+      
+      <hr />
+      
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'hackaweek'; // required: replace example with your forum shortname
+
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>      
+      
+      
+<!-- Progress navbar -->
+      <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+          <div class="container">
+
+            <div class="row-fluid">
+
+              <a class="brand" href="#">Progress:</a>
+  
+              <ul class="nav span10">
+                <li class="">
+                <a>
+                <form class="navbar-form pull-left">
+          
+                <div class="manualProgress progress progress-striped active" style="width: 50em;">
+                  <div class="bar" style="width: 0%;"></div>
+                </div>
+          
+                </form>
+                </a>
+                </li>
+              </ul>
+            
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+
+    </div>
+
+  </body>
+</html>

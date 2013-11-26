@@ -1,0 +1,54 @@
+/* 
+    Document   : style
+    Created on : Apr 20, 2013, 4:52:03 PM
+    Author     : Glavin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+  display: block;
+}
+
+/* CSS Reset */
+body * {
+  margin: 0;
+  padding: 0;
+}
+
+.videoContainer {
+  width: 100%;
+  background-color: black;
+  margin: 1em 0px;
+}
+
+.video {
+  width: 640px;
+  margin: 0px auto;
+}
+
+.textContainer {
+  border-top: 1px solid black; 
+  border-bottom: 1px solid black;
+
+}
+
+.code {
+  display: inline-block;
+  width: 40%;
+  border-right: 1px solid black; 
+}
+
+/*
+#code .CodeMirror {
+  border-top: 1px solid black; 
+  border-bottom: 1px solid black;
+}
+*/
+
+.preview {
+  display: inline-block;
+  width: 40%;
+  height: 100%;
+  vertical-align: top;
+}

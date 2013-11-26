@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>SMU Hack-A-Week</title>
+
+    <!-- Meta information -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">    
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+        
+  </head>
+
+  <!-- Website body content -->
+  <body data-spy="scroll" data-target="#navbar">
+
+    <div class="container-fluid">
+
+      <div class="masthead">
+        <h3 class="muted"></h3>
+        <div id="navbar" class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">              
+              <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+
+              <!-- Be sure to leave the brand out there if you want it shown -->
+              <a class="brand" href="#">Hack-A-Week</a>
+               
+              <!-- Everything you want hidden at 940px or less, place within here -->
+              <div class="nav-collapse collapse">
+                <!-- .nav, .navbar-search, .navbar-form, etc -->
+                 <ul class="nav">
+                    <li class="active"><a href="#home">Home</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#problems">Problems</a></li>
+                    <li><a href="#sponsors">Sponsors</a></li>
+                    <li><a href="#media">Media</a></li>
+                    <li><a href="#registration">Registration</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                  </ul>
+              </div>
+      
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
+
+      <!-- Content Body -->
+      <div class="bodyContent">
+        <h1>
+        <!-- <abbr title="Saint Mary's University">SMU</abbr> -->
+        Hack-A-Week
+        </h1>
+        <p id="home" class="lead">
+        Saint Mary's High School Programming Competition re-styled. <br>
+        </p>
+        
+        <hr />
+        
+        <div class="row-fluid">
+        
+          <div id="schedule" class="span6" style="padding-right: 20px; border-right: 1px solid #eeeeee;"> 
+            <h2>Schedule
+              <!-- Campus Map -->
+              <a href="http://www.smu.ca/virtualtour/maps" target="_blank" class="btn btn-inverse">Campus Map &raquo;</a>   
+            </h2>
+                             
+            <h3>Friday, May 3rd: 10am - 3pm </h3>
+            AM - Faculty and industry partners introduce problems.
+            Lunch.<br>
+            PM - Help you get started on the problems
+            <br> 
+            <pre>
+Introduce(problems); 
+Help->get you started on solutions 
+in (HTML || JavaScript || 
+YourFavouriteLanguage)  </pre>
+      
+            <h3>Saturday, May 4th - Friday, May 10th </h3>
+            Teams work off campus, with help of SMU & industry technical mentors, to keep improving your solution.
+            <br>
+            <pre>
+Hack->keep_Working_On_It from 
+Your_Favourite_OffCampus_Location: 
+try {add bells, &whistles} </pre>
+      
+            <h3>Saturday, May 11th: 10am - 2pm </h3>
+            AM - Present your solution to the judges.
+            Lunch.<br>
+            PM - Awards and prize presentations.    
+            <br> 
+            <pre>
+!!Wow the judges and all celebrate 
+{ yourProgrammingExcellence }; 
+return (withPrize) </pre> 
+            
+            <br />
+            Lunch will be provided on both days.
+            <br /> <br />
+            
+            <!-- Button to trigger modal -->
+            <a href="#getStartedModal" role="button" class="btn btn-large btn-success" data-toggle="modal">Get started today! &raquo;</a>
+      
+          </div>
+          
+          <!-- Twitter Widget -->
+          <div class="span6">
+            <h2>Stay Connected with <a href="https://twitter.com/" target="_blank">Twitter</a></h2>
+            
+            <blockquote class="pull-right">
+              <div class="well well-small" style="text-align: right; padding-right: 1em;">
+              Stay in the loop of all the information updates, happenings and progress of fellow competitors through twitter. 
+              <br/><span class="text-success">Follow us</span> <a href="https://twitter.com/smuhackathon/" class="btn btn-mini text-info" target="_blank"><strong class="">@smuhackathon</strong></a>.
+              <br/>Feel free to <span class="text-success">mention us</span> and use the hashtags <a href="https://twitter.com/search/realtime?q=%23SMUhackathon&src=hash" target="_blank">#smuhackathon</a>, <a href="https://twitter.com/search/realtime?q=%SMU&src=hash" target="_blank">#SMU</a> and <a href="https://twitter.com/search/realtime?q=%23Halifax&src=hash" target="_blank">#Halifax</a>.
+              <br/>We are trying to encourage you all to get to know fellow contestants and make new friends during this period. Share ideas and brainstorm on problems. Share your experience with the mentors and students.
+              <br/>Please do not share your solutions with others. The idea is to keep the spirits up!
+              </div>
+              <small class="lead">Ashish Mahajan, <cite title="Source Title">Hack-A-Week Social Media</cite></small>
+            </blockquote>
+
+            <style>
+              /* Customized Twitter Widget Styling */
+              iframe.twitter-timeline {
+                width: 100% !important;
+              }
+            </style>
+            <a class="twitter-timeline" width="100%" href="https://twitter.com/smuhackathon" data-widget-id="330091427545612288">Tweets by @smuhackathon</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          </div>        
+        
+        </div>
+         
+        <!-- Get Started Modal -->
+        <div id="getStartedModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Getting Started</h3>
+          </div>
+          <div class="modal-body">
+            
+            <h3>Sample Solutions & Manuals</h3>
+            <!--
+            <p class="lead">
+            Create a website that people can visit to find out about movie offerings in Halifax.
+            <br />
+            <a class="btn btn-info" href="problem1/">Problem 1 &raquo;</a>
+            </p>
+            <hr />
+            -->
+            <p class="lead">
+            <span class="badge badge-success">Problem 2</span>
+            Create a website that people can visit to determine what is the best cellphone plan offered in Halifax.
+            <br />
+            <a class="btn btn-info" href="problem2/done/" target="_blank">See our sample solution &raquo;</a>
+            <a class="btn btn-info" href="problem2/">See our solution manual &raquo;</a>
+            </p>
+            <hr />
+            <!--
+            <p class="lead">
+            Develop a website for accepting registrations for a conference, e-mail invoices, and generate report for the organizers.
+            <br />
+            <a class="btn btn-info" href="problem3/">Problem 3 &raquo;</a>
+            </p>
+            <hr />
+            -->
+            <p class="lead">
+            <span class="badge badge-success">Problem 4</span>
+            Develop a website for keeping track of exercise and diet patterns of a person.
+            <br />
+            <a class="btn btn-info" href="problem4/done/" target="_blank">See our sample solution &raquo;</a>
+            <a class="btn btn-info" href="problem4/">See our solution manual &raquo;</a>
+            </p>
+            
+            <!--
+            <hr/>
+            
+            <h3>Login</h3>
+            <form class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="inputEmail">Email</label>
+              <div class="controls">
+                <input type="text" id="inputEmail" placeholder="Email">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="inputPassword">Password</label>
+              <div class="controls">
+                <input type="password" id="inputPassword" placeholder="Password">
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <label class="checkbox">
+                  <input type="checkbox"> Remember me
+                </label>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+            </div>
+          </form>
+          -->
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
+        
+        <hr />
+        
+        <section id="problems">
+            
+            <h2>Suggested Problems <small class="text-info">& Possible Solutions</small></h2>
+            
+            <dl class="dl-horizontal">
+              <dt>Problem 1</dt>
+              <dd>Create a website that people can visit to find out about movie offerings in Halifax.</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>Problem 2</dt>
+              <dd>
+                Create a website that people can visit to determine what is the best cellphone plan offered in Halifax.
+                <br />
+                <a class="btn btn-info btn-mini" href="problem2/done/" target="_blank">Sample solution &raquo;</a>
+            <a class="btn btn-info btn-mini" href="problem2/">Solution manual &raquo;</a>
+              </dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>Problem 3</dt>
+              <dd>Develop a website for accepting registrations for a conference, e-mail invoices, and generate report for the organizers.</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>Problem 4</dt>
+              <dd>
+                Develop a website for keeping track of exercise and diet patterns of a person.
+                <br />
+                <a class="btn btn-info btn-mini" href="problem4/done/" target="_blank">Sample solution &raquo;</a>
+            <a class="btn btn-info btn-mini" href="problem4/">Solution manual &raquo;</a>
+              </dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>Problem 5</dt>
+              <dd>
+                Show your creative side and come up with your own idea for a <em>hack</em>!
+              </dd>
+            </dl>
+            
+        </section>
+  
+        <hr />
+        
+        <section id="sponsors">
+        
+          <h2>Sponsors</h2> 
+        
+          <style>
+          #myCarousel img {
+            height: 150px;
+            margin: 0 auto;
+          }
+          </style>
+        
+          <div id="myCarousel" class="carousel slide">
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+              <li data-target="#myCarousel" data-slide-to="3"></li>
+              <li data-target="#myCarousel" data-slide-to="4"></li>
+              <li data-target="#myCarousel" data-slide-to="5"></li>
+              <li data-target="#myCarousel" data-slide-to="6"></li>
+            </ol>
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+            
+              <div class="active item">
+                <a href="http://lixar.com/" target="_blank">
+                <img src="sponsors/lixar.png" />
+                </a>
+              </div>
+              <div class="item">
+                <a href="http://www.htcia.org/" target="_blank">
+                <img src="sponsors/htcia.jpg" />
+                </a>            
+              </div>
+              <div class="item">
+                <a href="http://www.hb-studios.com/" target="_blank">
+                <img src="sponsors/hb_studios.jpg" />
+                </a>            
+              </div>
+              <div class="item">
+                <a href="http://www.goinstant.com/" target="_blank">
+                <img src="sponsors/goinstant.png" />
+                </a>            
+              </div>
+              <div class="item">
+                <a href="http://www.frontier.co.uk/" target="_blank">
+                <img src="sponsors/frontier.png" /> 
+                </a>           
+              </div>
+              <div class="item">
+                <a href="http://www.simplycast.com/" target="_blank">
+                <img src="sponsors/simplycast.png" />
+                </a>            
+              </div>
+              <div class="item">
+                <a href="https://compilr.com/" target="_blank">
+                <img src="sponsors/compilr.png" />    
+                </a>
+              </div>
+            
+            </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+          </div>
+          
+        </section>
+        
+        <hr />
+        
+        <!-- Example row of columns -->
+        <div class="row-fluid">
+          <div id="media" class="span4">
+            <h2>Media</h2>
+            <p>Photos of the first day.</p>
+            <p><a class="btn" href="https://drive.google.com/folderview?id=0Bw12csMISQlXczF6X0c4VmktMHM&usp=sharing"
+             target="_docs">View photos &raquo;</a></p>
+            <p>An awesome poster to keep you excited.</p>
+            <p><a class="btn" href="docs/hackathonposter2013.pdf"
+             target="_docs">View poster &raquo;</a></p>
+          </div>
+          <div id="registration" class="span4">
+            <h2>Registration</h2>
+            <p>A registration form to keep you busy.</p>
+            <p><a class="btn" href="docs/Registration%20Form.pdf" 
+             target="_docs">View form as PDF &raquo;</a></p>
+            <p><a class="btn" href="docs/Registration.docx" 
+            target="_docs">View form as DOCX &raquo;</a></p>
+         </div>
+          <div id="contact" class="span4">
+            <h2>Contact</h2>
+            <p>
+            <address>
+              <strong>Saint Mary's University</strong><br>
+              Deptartment of Math and Computer Science<br>
+              <a href="http://goo.gl/maps/buZwu" target="_blank">
+              Saint Mary’s University<br>
+              923 Robie Street, Halifax, NS<br> 
+              </a>
+              Phone: <a href="tel:9024205035">(902) 420-5035</a> <br>
+            </address>
+            </p>
+            <p><a class="btn" href="mailto:hspc@cs.smu.ca">hspc@cs.smu.ca &raquo;</a></p>
+            <p><a class="btn" href="http://cs.smu.ca/hackathon" target="_blank">http://cs.smu.ca/hackathon &raquo;</a></p>
+
+          </div>
+        </div>
+            
+      </div>
+
+      <hr />
+
+      <div class="footer lead">
+        <p>&copy; <a href="http://www.linkedin.com/in/glavin" target="_blank">Glavin Wiechert</a> & <a href="http://cs.smu.ca/" target="_blank">Saint Mary's University</a> 2013 </p>
+      </div>
+
+
+    </div> <!-- /container -->
+
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+      $(document).ready(function() {
+          $('.carousel').carousel({
+              interval: 3000,
+              cycle: true
+          });
+      });
+    </script>
+
+  </body>
+</html>

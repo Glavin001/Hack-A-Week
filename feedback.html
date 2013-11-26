@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+<!-- Opening HTML tag -->
+<html lang="en">
+  <!-- All of the header information -->
+  <head>
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 2 - Hack-A-Week</title>
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <!-- Twitter Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      body { 
+        /* padding-top: 60px; */ /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    
+    <script>
+    
+    function displayFeedback( data ) {
+      var fid = data.FeedbackId || 0;
+      
+      if ( ! $('#feedback_'+fid).length ) { 
+        // Does not already exist
+      
+        var el = $('<div/>')
+        .attr('id', 'feedback_'+fid)
+        .hide()
+        .addClass('clearfix')
+        .prepend( $('<hr/>') )
+        .append(  
+          $('<blockquote/>')
+          .addClass( (fid%2)?'pull-left':'pull-right' )
+          .append(
+            $('<p/>').html(data.Content||"")
+          )
+          .append(
+            $('<small/>').html(data.UserName||""+'<cite title="Source Title">'+data.DateAdded||""+'</cite>')
+          )
+        );
+        $('#feedbackContainer').prepend( $(el) );
+        $(el).show('drop', {}, 1000+(data.delay||0));
+      } else {
+      // Already exists
+      }
+    }
+    
+    // Get Data from Database functions
+    function getFeedback( feedbackId , callback) {
+    var delay = 0;
+      $.getJSON(
+      "php/feedback.php", 
+      (feedbackId)?{ "id": feedbackId }:undefined, function(data) {
+        console.log(data);
+        if ( callback )
+          callback(data);
+        else {        
+          // Check if successfully retrieved current user information
+          if (data.successful) {
+            // Successful
+          
+            $.each( data.result, function (index, value) {
+              value.delay = delay;
+              delay += 1000;
+              displayFeedback(value);
+            });
+          
+          } else {
+            // Not successful
+          }    
+        }
+      });
+    }
+    
+    // Adding more data
+    function submitFeedback( callback ) {
+      // Get user input
+      var content = $("#feedbackContent").val();
+      var userName = $("#userName").val();
+      // Validate
+      if ( content && userName ) {
+        //console.log("Valid");
+        // Submit registration
+        $.getJSON(
+        "php/addFeedback.php", 
+        { 
+          "content": content, "userName": userName
+        }, 
+        function(data) {
+          console.log(data);
+          if ( callback )
+            callback(data);
+          else {
+            getFeedback(); // Update feedback list
+            if ( data.successful ) {
+              $("#feedbackContent").val("");
+              $("#userName").val("");
+            }
+          } 
+        });
+      } else {
+      // Not valid 
+      }
+    }
+    
+    $(document).ready( function ( ) {
+      getFeedback();
+      setInterval( getFeedback, 5000 );
+    });
+    
+    </script>
+    
+  </head>
+  <!-- Webpage body content -->
+  <body data-spy="scroll" data-target="#navbar">
+    
+    <div class="form-actions">
+      <div class="container-fluid">    
+        <textarea id="feedbackContent" style="width: 100%;" placeholder="Please give us your feedback!"></textarea>
+      </div>
+      <div class="input-prepend input-append pull-right">
+        <span class="add-on">Name</span>
+        <input class="span8" id="userName" type="text" placeholder="Your Name">
+        <button class="btn btn-primary" type="submit" onclick="submitFeedback();">Send Feedback</button>
+      </div>
+    </div>
+    <div class="container-fluid">
+      
+      <section id="feedbackContainer" class="" style="overflow:hidden;">
+      
+      <!--
+        <div class="clearfix">
+          <hr/>
+          <blockquote class="pull-right">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <small>Someone famous <cite title="Source Title">Source Title</cite></small>
+          </blockquote>
+        </div>
+      -->
+      
+      </section>
+
+    </div>
+  </body>  
+</html>
+            

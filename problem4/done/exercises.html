@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 4 - Hack-A-Week</title>
+    
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="noindex" name="robots">
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="css/style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Twitter Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      var updateExercises = function ( ) {
+          exercise( undefined, function(data) { 
+            var arr = [];
+            $.each( data.result, function(index, value) {
+              arr.push( [ value.Name, value.Description, value.Calories ] );
+            });
+            console.log(arr);
+            displayTable("#exercisesTable", ["Name","Description", "Calories"], arr);
+          } ) ;
+        };
+      $(document).ready( function() { 
+        updateExercises();
+      });
+    </script>
+    
+  </head>
+
+  <!-- Webpage body content -->
+  <body class="not-logged-in">
+  
+    <div class="container">
+    
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Problem 4</a>
+          <ul class="nav">
+            <li class="home.html"><a href="home.html">Home</a></li>
+
+            <li class="divider-vertical"></li>
+
+            <li class=""><a href="foods.html">Foods</a></li>
+            <li class="active"><a href="#">Exercises</a></li>
+
+            <li class="divider-vertical"></li>
+      
+            <div class="not-logged-in-only navbar-form pull-right form-inline">
+              <input id="email" type="text" class="input-small" placeholder="Email">
+              <input id="password" type="password" class="input-small" placeholder="Password">
+              <button type="submit" class="btn" onclick="login($('#email').val(),$('#password').val());">Sign in</button>
+            </div>
+            
+            <li class="logged-in-only dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="userName">Account</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="account.html">View Account</a></li>
+                <li><a href="#" onclick="logout();">Logout</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+          
+      <div id="content">
+    
+        <section class="not-logged-in-only">
+        
+          <div class="hero-unit">
+            <h1>Problem 4</h1>
+            <p>Track you exercise and diet.</p>
+            <p>
+              <!-- Button to trigger modal -->
+              <a href="#registerModal" data-toggle="modal" class="btn btn-primary btn-large">
+                Register now
+              </a>
+            </p>
+          </div>
+ 
+          <!-- Modal -->
+          <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputFirstName">First Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputFirstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputLastName">Last Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputEmail">Email</label>
+                  <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPassword">Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+                  <div class="controls">
+                    <input type="password" id="inputPasswordConfirm" placeholder="Confirm Password">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="registerUser();">Submit and Register</button>
+            </div>
+          </div>
+        
+            
+        </section>
+      
+        <section class="logged-in-only">
+
+          <h2>Exercises
+          <a href="#addExerciseModal" data-toggle="modal" class="btn btn-primary">
+            Add Exercise
+          </a>
+          </h2>          
+          <table id="exercisesTable" class="table table-bordered table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Calories</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+          
+          <!-- Modal -->
+          <div id="addExerciseModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Add Exercise</h3>
+            </div>
+            <div class="modal-body">
+              
+              <div class="form-horizontal">
+
+                <div class="control-group">
+                  <label class="control-label" for="inputName">Exercise Name</label>
+                  <div class="controls">
+                    <input type="text" id="inputName" placeholder="Exercise Name">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputDescription">Description</label>
+                  <div class="controls">
+                  
+                    <input type="text" id="inputDescription" placeholder="Exercise Description">
+
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputCalories">Calories</label>
+                  <div class="controls">
+                    <input type="number" id="inputCalories" min="0" placeholder="Calories" value="0">
+                  </div>
+                </div>
+
+              </div>
+       
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button class="btn btn-primary" onclick="addExercise( );">Add New Exercise</button>
+            </div>
+          </div>
+          
+        </section>   
+      
+      </div>
+         
+    </div>
+    
+  </body>
+  
+</html>

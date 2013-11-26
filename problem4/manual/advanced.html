@@ -1,0 +1,373 @@
+<!-- Hack-A-Week - Problem 4 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Problem 4 Manual - Hack-A-Week</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href="../"/>
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <!-- CodeMirror -->
+    <script src="../js/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../js/codemirror/lib/codemirror.css">
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/clike/clike.js"></script>
+    <script src="../js/codemirror/mode/php/php.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+     // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+            mode: null},
+          {matches: /(text|application)\/(x-)?vb(a|script)/i,
+            mode: "vbscript"}]
+      };
+    </script>
+    <style type="text/css">
+      .CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+      }
+      .CodeMirror-scroll {
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      
+      body { 
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-bottom: 60px; /* 60px to make the container go all the way to the top of the bottombar */
+      }
+    </style>
+  
+    <!-- Twitter Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      // Update progress display as user scrolls down page.
+      $(window).scroll( function() { 
+        var progress = (($(window).scrollTop()+$(window).height())/$(document).height())*100;
+        $('.manualProgress .bar').css({'width':( progress +'%') });
+        if (progress >= 100)
+          $('.manualProgress').addClass('progress-success');
+        else
+          $('.manualProgress').removeClass('progress-success');
+      });
+      
+      // Code editor 
+      $(document).ready( function () { 
+        $.each( $('.codeEditor'), function( index, value ) {  
+            var editor = CodeMirror.fromTextArea( $(value).find('textarea.code').get(0), {
+              lineNumbers: true,
+              matchBrackets: true,
+              continueComments: "Enter",
+              indentUnit: 4,
+              smartIndent: true,
+              tabSize: 4,
+              indentWithTabs: true,
+              lineWrapping: true,
+              tabMode: "indent",
+              mode: mixedMode,
+              viewportMargin: Infinity
+            });
+            $( $(value).find('.preview') ).html( editor.getValue() );
+            editor.on("change", function() {
+               $( $(value).find('.preview') ).html( editor.getValue() );
+            });          
+        });
+      });
+
+    </script>
+      
+  </head>
+  <body>
+  
+    <div class="container-fluid">
+    
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="#">Problem 4 Manual</a>
+            <ul class="nav">
+              <li><a href="manual/index.html">Home</a></li>
+              <li><a href="manual/start.html">Getting Started</a></li>
+              <li class="active"><a href="manual/advanced.html">Advanced</a></li>
+              <li><a href="done/" target="_blank">The Solution</a></li>
+              <li><a href="problem2.zip" target="_blank">Download Zip</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      <h1>Problem 4 Manual</h1>
+      <h2>
+        The Hack: <small class="alert alert-info">Develop a website for keeping track of exercise and diet patterns of a person.</small>
+      </h2>
+      
+      <hr/>
+      
+      <h2>Step 0.0  <small class="text-info">From <em>Todo</em> to <em>Done</em></small></h2>
+      
+      <p class="lead">
+        Before going over the actual code used in the website it is useful to note the resources used in the making of this <em>hack</em>.
+        <br/>
+        <ul class="lead">
+          <li><a href="http://jquery.com/">jQuery</a></li>
+          <li><a href="http://twitter.github.io/bootstrap/">Twitter Bootstrap</a></li>
+        </ul>
+      </p>
+      
+      
+<!-- Step 0.1 -->    
+      <h3>Step 0.1 <small class="text-info">Finding the Starting Point</small></h3>  
+      <p class="lead">
+        Navigate to the <code>/Hack_A_Week/problem2/</code> directory in your Windows Explorer / File Manager.
+      </p>
+
+<!-- Step 0.2 -->    
+      <h3>Step 0.2 <small class="text-info">What is <em>Done</em></small></h3>  
+      <p class="lead">
+        Once inside the problem's directory, find the <code>/done/</code> directory. You should see a list of files:
+        <ul class="lead">
+          <li><a href="done/index.html" target="_blank">index.html</a></li>
+          <li><a href="done/css/style.css" target="_blank">style.css</a></li>
+          <li><a href="done/js/main.js" target="_blank">main.js</a></li>
+        </ul>
+      </p>
+
+<!-- Step 0.3 -->    
+      <h3>Step 0.3 <small class="text-info">Copy & Paste</small></h3>  
+      <p class="lead">
+        Decide where you want to store your project, then copy the files in the <code>done</code> directory found from above into your new private directory. 
+        Your final result should look like this:  <br/>
+        <div class="well well-small">
+        /index.html <br/>
+        /css/style.css <br/>
+        /js/main.js <br/>
+        </div>      
+      </p>
+      <div class="alert alert-success">
+      Congrats! You now have a working full solution and code to play with! 
+      If you want to learn more about the sample solution's code please continue reading below and 
+      feel free to ask any question that this manual does not answer for you :).
+      </div>
+      
+      <hr/>
+    
+      <h2>Step 1  <small class="text-info">Markup and Styling</small></h2>
+      
+      <p class="lead">
+      
+      </p>
+      
+<!-- Step 1.1 -->    
+      <h3>Structure of a Webpage <small class="text-info">Structure of a Webpage</small></h3>  
+      
+      <p class="lead">
+      
+      </p>
+      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span12 well">
+            <textarea class="code" style="display: none;">
+<!DOCTYPE html>
+<!-- Required DOCTYPE for HTML5 -->
+
+<!-- Opening HTML tag -->
+<html lang="en">
+
+  <!-- All of the header information -->
+  <head>
+
+    <!-- The title of the website wrapped in title tags -->
+    <title>Problem 2 - Hack-A-Week</title>
+
+    <!-- Meta information -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    
+  </head>
+  <body>
+    
+    <div class="container">
+      Content
+    </div>
+  
+  </body>
+</html>
+            </textarea>
+          </div>
+        </section>
+      </div>
+
+      
+<!-- Step 1.2 -->
+      <h3>Step 1.2 <small class="text-info">Pushing Buttons</small></h3>  
+      
+      <p class="lead">
+      I recommend you see the <a href="http://twitter.github.io/bootstrap/base-css.html?#buttons">Twitter Bootstrap's buttons page for more information</a>.
+      </p>
+      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span8 well">
+            <textarea class="code"  style="display: none;">
+<button class="">Normal HTML Button</button> <br><br>
+<button class="btn">Twitter Bootstrap Button</button> <br><br>
+<button class="btn btn-primary">Twitter Bootstrap Primary Button</button> <br><br>
+<button class="btn btn-large">Twitter Bootstrap Large Button</button>
+            </textarea>
+          </div>
+          <div class="preview span4 well">
+          </div>          
+        </section>
+      </div>
+
+<p class="lead">
+Try these other button classes for yourself! Simply change the <code>class</code> attribute. <br/>
+<button class="btn">btn</button>
+<button class="btn btn-primary">btn btn-primary</button>
+<button class="btn btn-info">btn btn-info</button>
+<button class="btn btn-success">btn btn-success</button>
+<button class="btn btn-warning">btn btn-warning</button>
+<button class="btn btn-danger">btn btn-danger</button>
+<button class="btn btn-inverse">btn btn-inverse</button>
+<button class="btn btn-link">btn btn-link</button>
+<br />
+<button class="btn btn-large">btn btn-large</button>
+<button class="btn btn-small">btn btn-small</button>
+<button class="btn btn-mini">btn btn-mini</button>
+
+</p>
+     
+      </div>
+
+
+<!-- Step 1.3 -->
+      <h3>Step 1.3 <small class="text-info"></small></h3>  
+      
+      <p class="lead">
+
+      </p>
+      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span5 well">
+            <textarea class="code"  style="display: none;">
+<div class="alert alert-success">
+  <h3>
+    <span class="badge badge-success ">1.</span> 
+    Voice & Data 45 - Promo 
+    <small class="text-info">$45.00/month</small>
+    <span class="badge badge-info pull-right">$45.00/month</span>              
+  </h3>
+  <div class="progress progress-striped active">
+    <div class="bar" style="width: 45%;"></div>               
+  </div>
+</div>
+            </textarea>
+          </div>
+          <div class="preview span7 well">
+          </div>          
+        </section>
+      </div>
+
+
+<!-- Step 1.4 -->
+      <h3>Step 1.4 <small class="text-info"></small></h3>  
+      
+      <p class="lead">
+
+      </p>
+      
+      <div class="row-fluid">
+        <section class="codeEditor">
+          <div class="span5 well">
+            <textarea class="code"  style="display: none;">
+<div id="vd45" class="well well-large">
+ <div class="page-header">
+    <h1>Voice & Data 45 - Promo <small class="pull-right">$45.00/month</small></h1>
+  </div>
+  <p class="lead">
+    <h2>1000 <small class="lead text-info">anytime local minutes</small></h2>
+    <h2>150 <small class="lead text-info">MB of data</small></h2>
+    <p class="alert alert-success">$10 per additional 250MB</p>
+    <p class="alert alert-block">
+      Convert your local minutes to nationwide minutes for an additional $10. Learn more.
+    </p>
+  </p>          
+</div>
+            </textarea>
+          </div>
+          <div class="preview span7 well">
+          </div>          
+        </section>
+      </div>
+
+      <hr />
+      
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'hackaweek'; // required: replace example with your forum shortname
+
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>      
+      
+<!-- Progress navbar -->
+      <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+          <div class="container">
+
+            <div class="row-fluid">
+
+              <a class="brand" href="#">Progress:</a>
+  
+              <ul class="nav span10">
+                <li class="">
+                <a>
+                <form class="navbar-form pull-left">
+          
+                <div class="manualProgress progress progress-striped active" style="width: 50em;">
+                  <div class="bar" style="width: 0%;"></div>
+                </div>
+          
+                </form>
+                </a>
+                </li>
+              </ul>
+            
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+
+    </div>
+
+  </body>
+</html>

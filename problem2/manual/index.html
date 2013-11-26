@@ -1,0 +1,109 @@
+<!-- Hack-A-Week - Problem 2 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Problem 2 Manual - Hack-A-Week</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href="../"/>
+
+    <!-- Links to external files -->
+    <!-- External CSS -->
+    <link charset="utf-8" href="style.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <!-- External JavaScript -->
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <!-- CodeMirror -->
+    <script src="../js/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../js/codemirror/lib/codemirror.css">
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/clike/clike.js"></script>
+    <script src="../js/codemirror/mode/php/php.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+     // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+            mode: null},
+          {matches: /(text|application)\/(x-)?vb(a|script)/i,
+            mode: "vbscript"}]
+      };
+    </script>
+    <style type="text/css">
+      .CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+      }
+      .CodeMirror-scroll {
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      
+      body { 
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-bottom: 60px; /* 60px to make the container go all the way to the top of the bottombar */
+      }
+    </style>
+  
+    <!-- Twitter Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+      
+  </head>
+  <body>
+  
+    <div class="container-fluid">
+    
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="#">Problem 2 Manual</a>
+            <ul class="nav">
+              <li class="active"><a href="manual/index.html">Home</a></li>
+              <li><a href="manual/start.html">Getting Started</a></li>
+              <li><a href="manual/advanced.html">Advanced</a></li>
+              <li><a href="done/" target="_blank">The Solution</a></li>
+              <li><a href="problem2.zip" target="_blank">Download Zip</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      <h1>Problem 2 Manual</h1>
+      <h2>
+        The Hack: <small class="alert alert-info">Create a website that people can visit to determine what is the best cellphone plan offered in Halifax.</small>
+      </h2>
+      
+      <hr/>
+      
+      <h2>Getting Started  <small class="text-info">From <em>Todo</em> to <em>Done</em></small></h2>
+      
+      <p class="lead">
+      We will help you get started by stepping your through the process of creating <a href="done/">this solution</a>. <br/>
+      <a class="btn btn-primary" href="manual/start.html">Let's get started!</a>
+      </p>
+      
+      <hr/>
+    
+      <h2>Advanced  <small class="text-info">Interpreting the Code</small></h2>
+      
+      <p class="lead">
+      Once you are all setup you can get further acquainted with the code used in <a href="done/">this solution</a> by looking through the advanced manual. <br/>
+      <a class="btn btn-primary" href="manual/advanced.html">I want to learn more!</a>
+      </p>
+      
+
+    </div>
+
+  </body>
+</html>
